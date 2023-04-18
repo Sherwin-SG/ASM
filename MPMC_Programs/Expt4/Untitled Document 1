@@ -1,0 +1,52 @@
+section .data
+input db "Enter "
+men db "1 HTB,2 BTH,3 EXIT"
+menlen equ $-men
+newline db 10,13,""
+HTBTEXT db 10,13 "Converting HEX to BCD"
+
+section.bss 
+input resb 6
+result resb 6
+	%macro print 2
+		mov eax,4
+		mov ebx,1
+		mov ecx,%1
+		mov edx,%2
+		int 80h
+		%endmacro
+
+section .text
+global _start
+
+_start:
+	menu:
+		;PRINT Where PRINT iS A MACRO
+		print newline,1
+		print men,menlen
+		
+		;INPUT 
+		read opt,2
+		
+		;IF CONDITIONS	
+		cmp byte[opt],'1'
+		je HTB
+		cmp byte[opt],'2'
+		je BTH
+		cmp byte[opt],'3'
+		je finish
+		print err,errlen
+		jmp men
+		
+	
+	HTB:
+		print newline,1
+		print msg1,msg1_len
+
+		read num,5
+		call convert
+		mov ax,bx
+		mov bx,10
+		mov ecx,00
+	
+

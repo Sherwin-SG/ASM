@@ -1,0 +1,3 @@
+nasm -f elf32 -o Conversion.o Conversion.asm
+ld -m elf_i386 -o Conversion Conversion.o
+./Conversion
